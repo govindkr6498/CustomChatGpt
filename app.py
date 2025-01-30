@@ -12,23 +12,24 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins (change this to ["http://127.0.0.1:5500"] for better security)
+    allow_origins=["*"],  # Allow all origins (change for better security)
     allow_credentials=True,
     allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
     allow_headers=["*"],  # Allow all headers
 )
-# os.environ["OPENAI_API_KEY"] = "your_openai_api_key_here"
-# import os
-os.environ["OPENAI_API_KEY"] = "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" 
-# print(os.getenv("OPENAI_API_KEY"))
 
+# Set OpenAI API Key
+# os.environ["OPENAI_API_KEY"] = "your_openai_api_key_here"  # Replace with your actual API key
+
+os.environ["OPENAI_API_KEY"] = "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"
+print(os.getenv("OPENAI_API_KEY"))
 
 # Load PDF and create vector store
 def get_vectorstore_from_static_pdf(pdf_path="C:/Users/lenovo/Downloads/ApexDeveloperGuidea.pdf"):
     pdf_reader = PdfReader(pdf_path)
     text = ""
     for page in pdf_reader.pages:
-        text += page.extract_text()
+        text += page.extract_text() or ""  # Handle None values
 
     # Split text into chunks
     from langchain.text_splitter import CharacterTextSplitter
@@ -44,11 +45,11 @@ def get_vectorstore_from_static_pdf(pdf_path="C:/Users/lenovo/Downloads/ApexDeve
 # Load the vector store at startup
 vector_store = get_vectorstore_from_static_pdf()
 
-# Chat input model
+# Chat request model
 class ChatRequest(BaseModel):
     message: str
 
-# Chat function
+# Function to get response from OpenAI
 def get_response(user_input):
     llm = ChatOpenAI()
     retriever = vector_store.as_retriever()
@@ -62,4 +63,4 @@ async def chat_endpoint(chat_request: ChatRequest):
     response = get_response(chat_request.message)
     return {"answer": response}
 
-# Run the server using: uvicorn app:app --reload
+# Run the server using: python -m uvicorn app:app --reload
