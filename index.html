@@ -116,83 +116,30 @@
     </div>
   </div>
 
-  <!-- <script>
-    // Toggle chatbot visibility
-    function toggleChatbot() {
-      const chatbot = document.getElementById('chatbot');
-      chatbot.style.display = chatbot.style.display === 'none' || chatbot.style.display === '' ? 'flex' : 'none';
-    }
-
-    // Send message to API and display response
-    async function sendMessage() {
-      const userInput = document.getElementById('userInput');
-      const chatMessages = document.getElementById('chatMessages');
-
-      if (userInput.value.trim() === '') return;
-
-      // Display user message
-      const userMessage = document.createElement('div');
-      userMessage.className = 'message user';
-      userMessage.textContent = userInput.value;
-      chatMessages.appendChild(userMessage);
-
-      // Clear input field
-      const userMessageText = userInput.value;
-      userInput.value = '';
-      // Call the API
-      try {
-        const response = await fetch('http://127.0.0.1:8000/api/chat', {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message: userMessageText }),
-        });
-
-
-        const data = await response.json();
-
-        // Display bot response
-        const botMessage = document.createElement('div');
-        botMessage.className = 'message bot';
-        botMessage.textContent = data.answer || 'I couldn\'t understand that.';
-        chatMessages.appendChild(botMessage);
-      } catch (error) {
-        // Display error message
-        const botMessage = document.createElement('div');
-        botMessage.className = 'message bot';
-        botMessage.textContent = 'An error occurred. Please try again.';
-        chatMessages.appendChild(botMessage);
-      }
-
-      // Scroll to the bottom of the chat
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-  </script> -->
-
   <script>
     // Toggle chatbot visibility
     function toggleChatbot() {
       const chatbot = document.getElementById('chatbot');
       chatbot.style.display = chatbot.style.display === 'none' || chatbot.style.display === '' ? 'flex' : 'none';
     }
-  
+
     // Send message to API and display response
     async function sendMessage() {
       const userInput = document.getElementById('userInput');
       const chatMessages = document.getElementById('chatMessages');
-  
+
       if (userInput.value.trim() === '') return;
-  
+
       // Display user message
       const userMessage = document.createElement('div');
       userMessage.className = 'message user';
       userMessage.textContent = userInput.value;
       chatMessages.appendChild(userMessage);
-  
+
       // Clear input field
       const userMessageText = userInput.value;
       userInput.value = '';
+
       // Call the API
       try {
         const response = await fetch('http://127.0.0.1:8000/api/chat', {
@@ -202,9 +149,9 @@
             },
             body: JSON.stringify({ message: userMessageText }),
         });
-  
+
         const data = await response.json();
-  
+
         // Display bot response
         const botMessage = document.createElement('div');
         botMessage.className = 'message bot';
@@ -217,19 +164,11 @@
         botMessage.textContent = 'An error occurred. Please try again.';
         chatMessages.appendChild(botMessage);
       }
-  
+
       // Scroll to the bottom of the chat
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-  
-    // Listen for "Enter" key press to send the message
-    document.getElementById('userInput').addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') {
-        e.preventDefault(); // Prevent the default action (form submission)
-        sendMessage();
-      }
-    });
   </script>
-  
+
 </body>
 </html>
